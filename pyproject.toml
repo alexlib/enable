@@ -1,3 +1,7 @@
 [build-system]
 requires = ["cython", "oldest-supported-numpy", "setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+before-all = ""
+before-build = "apt update && apt install g++ swig3.0 libxkbcommon-x11-0 libglu1-mesa-dev qt5-default && ln -s /usr/bin/swig3.0 /usr/bin/swig"
