@@ -2,5 +2,17 @@
 requires = ["cython", "oldest-supported-numpy", "setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.cibuildwheel]
+# Normal options, etc.
+manylinux-x86_64-image = "manylinux2014"
+
+[[tool.cibuildwheel.overrides]]
+select = "cp36-*"
+manylinux-x86_64-image = "manylinux1"
+
+[[tool.cibuildwheel.overrides]]
+select = "cp3{7,8,9}-*"
+manylinux-x86_64-image = "manylinux2010"
+
 [tool.cibuildwheel.linux]
 before-all = "yum update && yum install -y g++ swig3.0 libxkbcommon-x11-0 libglu1-mesa-dev qt5-default && ln -s /usr/bin/swig3.0 /usr/bin/swig"
