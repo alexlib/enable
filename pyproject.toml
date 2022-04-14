@@ -3,6 +3,7 @@ requires = ["cython", "oldest-supported-numpy", "setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
+skip = "cp310-*"
 build-verbosity = 1
 before-build = ["apt update -y",
               "apt install libglu1-mesa-dev swig3.0 qt5-default -y", 
