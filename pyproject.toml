@@ -3,16 +3,17 @@ requires = ["cython", "oldest-supported-numpy", "setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
-# Normal options, etc.
-manylinux-x86_64-image = "manylinux2014"
-
-[[tool.cibuildwheel.overrides]]
-select = "cp36-*"
-manylinux-x86_64-image = "manylinux1"
-
-[[tool.cibuildwheel.overrides]]
-select = "cp3{7,8,9}-*"
-manylinux-x86_64-image = "manylinux2010"
+build-verbosity = 1
+before-build = ["apt update -y",
+              "apt install libglu1-mesa-dev swig3.0 qt5-default -y", 
+               # "apt install libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0",
+               # "apt install libxcb-keysyms1 libxcb-randr0 libxcb-render-util0",
+               # "apt installl libxcb-xinerama0 libsdl2-2.0-0",
+               # "ln -s /usr/bin/swig3.0 /usr/bin/swig",
+                "python -m pip install -U pip setuptools wheel numpy Cython traits pyface traitsui"]
 
 [tool.cibuildwheel.linux]
-before-all = "yum update && yum install -y g++ swig3.0 libxkbcommon-x11-0 libglu1-mesa-dev qt5-default && ln -s /usr/bin/swig3.0 /usr/bin/swig"
+manylinux-x86_64-image = "manylinux_2_24"
+manylinux-i686-image = "manylinux_2_24"
+repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel}"
+
